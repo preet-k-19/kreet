@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memories with My Best Friend</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffd6e0, #ffe3ed, #fceabb);
+      color: #444;
+      cursor: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') 16 16, auto;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background-color: rgba(255, 192, 203, 0.3);
+    }
+
+    header h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      color: #ff69b4;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+
+    .quote {
+      text-align: center;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #a64d79;
+      margin: 1rem auto;
+      max-width: 800px;
+    }
+
+    .scrolling-gallery {
+      display: flex;
+      gap: 20px;
+      padding: 2rem 1rem;
+      animation: scroll 165s linear infinite; /* Adjust the speed here */
+      width: max-content;
+    }
+
+    .gallery-wrapper {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .card {
+      background: #fff0f5;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      min-width: 250px;
+      position: relative;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .caption {
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .photo-album {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 20px;
+}
+
+.photo-entry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.photo-entry.left {
+  flex-direction: row;
+}
+
+.photo-entry.right {
+  flex-direction: row-reverse;
+}
+
+.photo-entry img {
+  width: 500px;
+  height: auto;
+  border-radius: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 182, 193, 0.3);
+}
+
+.photo-entry img:hover {
+  transform: scale(1.10);
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.7);
+}
+
+.note {
+  max-width: 300px;
+  font-size: 1.5rem;
+  color: #d63384;
+  font-family: 'Comic Sans MS', cursive;
+  padding: 10px;
+}
+
+
+    /* Glowing border effect */
+    .card:hover {
+      box-shadow: 0 0 15px 5px rgba(255, 105, 180, 0.8); /* Light pink glow */
+      border: 2px solid rgba(255, 105, 180, 0.8);
+      
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background-color: rgba(255, 192, 203, 0.2);
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    /* Scroll Animation */
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .floating {
+  position: absolute;
+  animation: float 10s linear infinite;
+  }
+  @keyframes float {
+  0% { bottom: -50px; opacity: 0; }
+  50% { opacity: 1; }
+  100% { bottom: 100%; opacity: 0; }
+  }
+
+
+    .heart {
+      position: absolute;
+      bottom: 0;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      transform: rotate(-45deg);
+      animation: floatUp linear infinite;
+      animation-fill-mode: forwards;
+      opacity: 0.8;
+      will-change: transform, opacity;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(-45deg) scale(0.8);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(-45deg) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+  .memory-divider {
+  text-align: center;
+  font-size: 2rem;
+  color: #ff9ecf;
+  margin: 20px 0;
+  animation: floatHeart 2s ease-in-out infinite;
+}
+
+@keyframes floatHeart {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+.firefly-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.firefly {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffd700 0%, rgba(255, 215, 0, 0.2) 60%, transparent 80%);
+  box-shadow: 0 0 10px #ffd700, 0 0 20px #ffa500;
+  opacity: 0;
+  animation: twinkle 2s infinite ease-in-out, floatRandom 25s linear infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+@keyframes floatRandom {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(calc(100vw - 50px), calc(100vh - 50px));
+  }
+}
+
+
+.sweet-note {
+  text-align: center;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #c94f7c;
+  margin: 3rem 1rem 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 240, 245, 0.4);
+  border-radius: 12px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 10px rgba(255, 182, 193, 0.3);
+  font-family: 'Pacifico', cursive;
+}
+
+ 
+  .music-btn {
+    background-color: pink;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 4px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+  }
+
+  .music-btn:hover {
+    background-color: hotpink;
+  }
+
+
+
+</style>
+
+<div style="position: fixed; bottom: 20px; right: 20px;">
+  <button class="music-btn" onclick="document.getElementById('bgMusic').play()">🎵 Play</button>
+  <button class="music-btn" onclick="document.getElementById('bgMusic').pause()">⏸️ Pause</button>
+</div>
+
+</head>
+<body>
+<div class="firefly-container"></div>
+<header>
+    <h1>We Best Friends 💖</h1>
+    <p>Some moments can never be replaced…</p>
+  </header>
+
+  <div class="quote">"A best friend is someone who makes you laugh even when you think you'll never smile again."</div>
+
+<audio id="bgMusic" loop>
+  <source src="Tera yaar hun main.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+
+
+
+  <div class="gallery-wrapper">
+    <div class="scrolling-gallery">
+      <div class="card">
+        <img src="KREE/trip.jpg" alt="Memory 1">
+        <div class="caption">Our first trip together 🌈</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-1169307166.jpg" alt="Memory 2">
+        <div class="caption">Laughs that still echo 💫</div>
+      </div>
+      <div class="card">
+        <img src="KREE/IMG-20250117-WA0006.jpg" alt="Memory 3">
+        <div class="caption">Pagalpanti together 😛🌈</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-349059021.jpg" alt="Memory 4">
+        <div class="caption">Every celebration felt brighter with you 🎉</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-1761375705.jpg" alt="Memory 5">
+        <div class="caption">Our laughter fills the air 🌟</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-504354075.jpg" alt="Memory 6">
+        <div class="caption">Collecting memories, not just moments 📍</div>
+      </div>
+      <div class="card">
+        <img src="KREE/copy-m7.jpg" alt="Memory 7">
+        <div class="caption">We didn’t choose the friendship life — it chose us ✌️</div>
+      </div>
+      <div class="card">
+        <img src="KREE/copy-m9.jpg" alt="Memory 8">
+        <div class="caption">Side by side, always — in fun, in work, in everything that matters</div>
+      </div>
+      <div class="card">
+        <img src="KREE/b206bf79-638a-4553-a1a9-a04d0820381d.png" alt="Memory 9">
+        <div class="caption">No one asked us to be this iconic, but here we are 💅</div>
+      </div>
+      <div class="card">
+        <img src="KREE/IMG-20250317-WA0035.jpg" alt="Memory 10">
+        <div class="caption">My favorite person to make memories with 🎞️</div>
+      </div>
+      <div class="card">
+        <img src="KREE/mm11.jpg" alt="Memory 10">
+        <div class="caption">Too glam to give a damn 💁‍♀️💁‍♂️</div>
+      </div>
+      <!-- Duplicate the gallery for infinite scrolling -->
+      <div class="card">
+        <img src="KREE/trip.jpg" alt="Memory 1">
+        <div class="caption">Our first trip together 🌈</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-1169307166.jpg" alt="Memory 2">
+        <div class="caption">Laughs that still echo 💫</div>
+      </div>
+      <div class="card">
+        <img src="KREE/IMG-20250117-WA0006.jpg" alt="Memory 3">
+        <div class="caption">Pagalpanti together 😛🌈</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-349059021.jpg" alt="Memory 4">
+        <div class="caption">Every celebration felt brighter with you 🎉</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-1761375705.jpg" alt="Memory 5">
+        <div class="caption">Our laughter fills the air 🌟</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-504354075.jpg" alt="Memory 6">
+        <div class="caption">Collecting memories, not just moments 📍</div>
+      </div>
+      <div class="card">
+        <img src="KREE/copy-m7.jpg" alt="Memory 7">
+        <div class="caption">We didn’t choose the friendship life — it chose us ✌️</div>
+      </div>
+      <div class="card">
+        <img src="KREE/copy-m9.jpg" alt="Memory 8">
+        <div class="caption">Side by side, always — in fun, in work, in everything that matters</div>
+      </div>
+      <div class="card">
+        <img src="KREE/b206bf79-638a-4553-a1a9-a04d0820381d.png" alt="Memory 9">
+        <div class="caption">No one asked us to be this iconic, but here we are 💅</div>
+      </div>
+      <div class="card">
+        <img src="KREE/IMG-20250317-WA0035.jpg" alt="Memory 10">
+        <div class="caption">My favorite person to make memories with 🎞️</div>
+      </div>
+      <div class="card">
+        <img src="KREE/mm11.jpg" alt="Memory 10">
+        <div class="caption">Too glam to give a damn 💁‍♀️💁‍♂️</div>
+      </div>
+      <!--cycle : 3-->
+      <div class="card">
+        <img src="KREE/trip.jpg" alt="Memory 1">
+        <div class="caption">Our first trip together 🌈</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-1169307166.jpg" alt="Memory 2">
+        <div class="caption">Laughs that still echo 💫</div>
+      </div>
+      <div class="card">
+        <img src="KREE/IMG-20250117-WA0006.jpg" alt="Memory 3">
+        <div class="caption">Pagalpanti together 😛🌈</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-349059021.jpg" alt="Memory 4">
+        <div class="caption">Every celebration felt brighter with you 🎉</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-1761375705.jpg" alt="Memory 5">
+        <div class="caption">Our laughter fills the air 🌟</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-504354075.jpg" alt="Memory 6">
+        <div class="caption">Collecting memories, not just moments 📍</div>
+      </div>
+      <div class="card">
+        <img src="KREE/copy-m7.jpg" alt="Memory 7">
+        <div class="caption">We didn’t choose the friendship life — it chose us ✌️</div>
+      </div>
+      <div class="card">
+        <img src="KREE/copy-m9.jpg" alt="Memory 8">
+        <div class="caption">Side by side, always — in fun, in work, in everything that matters</div>
+      </div>
+      <div class="card">
+        <img src="KREE/b206bf79-638a-4553-a1a9-a04d0820381d.png" alt="Memory 9">
+        <div class="caption">No one asked us to be this iconic, but here we are 💅</div>
+      </div>
+      <div class="card">
+        <img src="KREE/IMG-20250317-WA0035.jpg" alt="Memory 10">
+        <div class="caption">My favorite person to make memories with 🎞️</div>
+      </div>
+      <div class="card">
+        <img src="KREE/mm11.jpg" alt="Memory 10">
+        <div class="caption">Too glam to give a damn 💁‍♀️💁‍♂️</div>
+      </div>
+      <!--cycle : 4-->
+      <div class="card">
+        <img src="KREE/trip.jpg" alt="Memory 1">
+        <div class="caption">Our first trip together 🌈</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-1169307166.jpg" alt="Memory 2">
+        <div class="caption">Laughs that still echo 💫</div>
+      </div>
+      <div class="card">
+        <img src="KREE/IMG-20250117-WA0006.jpg" alt="Memory 3">
+        <div class="caption">Pagalpanti together 😛🌈</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-349059021.jpg" alt="Memory 4">
+        <div class="caption">Every celebration felt brighter with you 🎉</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-1761375705.jpg" alt="Memory 5">
+        <div class="caption">Our laughter fills the air 🌟</div>
+      </div>
+      <div class="card">
+        <img src="KREE/Snapchat-504354075.jpg" alt="Memory 6">
+        <div class="caption">Collecting memories, not just moments 📍</div>
+      </div>
+      <div class="card">
+        <img src="KREE/copy-m7.jpg" alt="Memory 7">
+        <div class="caption">We didn’t choose the friendship life — it chose us ✌️</div>
+      </div>
+      <div class="card">
+        <img src="KREE/copy-m9.jpg" alt="Memory 8">
+        <div class="caption">Side by side, always — in fun, in work, in everything that matters</div>
+      </div>
+      <div class="card">
+        <img src="KREE/b206bf79-638a-4553-a1a9-a04d0820381d.png" alt="Memory 9">
+        <div class="caption">No one asked us to be this iconic, but here we are 💅</div>
+      </div>
+      <div class="card">
+        <img src="KREE/IMG-20250317-WA0035.jpg" alt="Memory 10">
+        <div class="caption">My favorite person to make memories with 🎞️</div>
+      </div>
+      <div class="card">
+        <img src="KREE/mm11.jpg" alt="Memory 10">
+        <div class="caption">Too glam to give a damn 💁‍♀️💁‍♂️</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote">"We didn't realize we were making memories, we just knew we were having fun."</div>
+
+  <header>
+    <h1>Our Little Moment 💐</h1>
+  </header>
+<br>
+<div class="photo-entry left">
+  <img src="KREE/Snapchat-455933499.jpg" alt="Memory 1">
+  <p class="note">Our first selfie togather(29th October) 📷🌟</p>
+</div>
+<div class="memory-divider">🌷</div>
+<div class="photo-entry right">
+  <img src="KREE/Snapchat-1148853467.jpg" alt="Memory 2">
+  <p class="note">More than places — it’s the people you travel with that matter 🧭</p>
+</div>
+<div class="memory-divider">🌟</div>
+
+<div class="photo-entry left">
+  <img src="KREE/Snapchat-1440643844.jpg" alt="Memory 3">
+  <p class="note">Every silly selfie holds a thousand emotions 📸</p>
+</div>
+<div class="memory-divider">🫰🏻</div>
+<div class="photo-entry right">
+  <img src="KREE/Snapchat-1049563910.jpg" alt="Memory 2">
+  <p class="note">Through thick and thin, laughter and tears — always us 🫶</p>
+</div>
+<div class="memory-divider">💗</div>
+<div class="photo-entry left">
+  <img src="KREE/Snapchat-869704739.jpg" alt="Memory 3">
+  <p class="note">Me and meri badmosh Mahila-Mitra 😎💪🏻</p>
+</div>
+</br>
+
+<div class="sweet-note">
+  Thank you for being the kind of friend who makes every moment feel like a beautiful memory. 💖
+</div>
+
+ 
+  <div>🌷🌼🪻🧸🌼🪻🌷🎀🪻🌷🌼🫰🏻🌷🌼🪻🌘🌼🪻🌷💫🪻🌷🌼💐🌷🌼🪻✨🌼🪻🌷🌍🌷🌼🪻🫂🌼🪻🌷🍦🌷🌼🪻🧸🌼🪻🌷🎀🪻🌷🌼☁️🌷🌼🪻☀️🌼🪻🌷🥬🪻🌷🌼🍃🌷🌼🪻🌹🌷</div>
+  <footer>
+    Made with 💕 by your Golu-Molu | Forever Grateful for Our Friendship ✨
+  </footer>
+
+  <div class="bubbles">
+    <div class="heart" style="left: 5%; animation-delay: 0s; animation-duration: 12s;"></div>
+    <div class="heart" style="left: 10%; animation-delay: 1.5s; animation-duration: 10s;"></div>
+    <div class="heart" style="left: 15%; animation-delay: 0.5s; animation-duration: 13s;"></div>
+    <div class="heart" style="left: 20%; animation-delay: 2.5s; animation-duration: 11s;"></div>
+    <div class="heart" style="left: 25%; animation-delay: 1s; animation-duration: 12s;"></div>
+    <div class="heart" style="left: 30%; animation-delay: 3s; animation-duration: 14s;"></div>
+    <div class="heart" style="left: 35%; animation-delay: 1.2s; animation-duration: 10s;"></div>
+    <div class="heart" style="left: 40%; animation-delay: 2.2s; animation-duration: 13s;"></div>
+    <div class="heart" style="left: 45%; animation-delay: 0.8s; animation-duration: 12s;"></div>
+    <div class="heart" style="left: 50%; animation-delay: 2.8s; animation-duration: 11s;"></div>
+  </div>
+
+  <script>
+  const container = document.querySelector('.firefly-container');
+  const colors = ['#ffd700', '#ff69b4', '#ffa500']; // gold, pink, orange
+
+  for (let i = 0; i < 80; i++) { // Increased from 40 to 80
+    const spark = document.createElement('div');
+    spark.classList.add('firefly');
+
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    spark.style.top = Math.random() * 100 + 'vh';
+    spark.style.left = Math.random() * 100 + 'vw';
+    spark.style.animationDelay = Math.random() * 10 + 's';
+    spark.style.animationDuration = (3 + Math.random() * 4) + 's';
+    spark.style.background = `radial-gradient(circle, ${color} 0%, rgba(255, 255, 255, 0.2) 60%, transparent 80%)`;
+    spark.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+    container.appendChild(spark);
+  }
+</script>
+<script>
+  const audio = document.getElementById("bgMusic");
+
+  // Set start time after metadata is loaded
+  audio.addEventListener('loadedmetadata', () => {
+    audio.currentTime = 122; // 1:05 is 65 seconds
+    audio.play(); // start playing after setting time
+  });
+</script>
+
+
+
+</body>
+</html>
